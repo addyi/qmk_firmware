@@ -46,10 +46,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HM_LCBR SFT_T(KC_LCBR)
 #define HM_RCBR CMD_T(KC_RCBR)
 
-#define HM_LPRN CTL_T(KC_LPRN)
-#define HM_RPRN OPT_T(KC_RPRN)
-#define HM_MINS SFT_T(KC_MINS)
-#define HM_COLN CMD_T(KC_COLN)
+#define HM_COLN CTL_T(KC_COLN)
+#define HM_MINS OPT_T(KC_MINS)
+#define HM_RPRN SFT_T(KC_RPRN)
+#define HM_LPRN CMD_T(KC_LPRN)
 
 // Define symbols
 #define KC_EUR LSA(KC_2)
@@ -107,3 +107,113 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   )
 };
+
+
+/*
+Intercept mod-tabs that contain non-basic keycodes e.g. home row mods on symbols or navigation layer.
+Mod-hold is handled correctly but can also be intercepted if the need arises.
+see: https://precondition.github.io/home-row-mods#using-non-basic-keycodes-in-mod-taps
+see: https://docs.qmk.fm/#/mod_tap?id=changing-tap-function
+*/
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HM_STA:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_HOME); // Send KC_HOME on tap
+                return false;        // Ignore further processing of key.
+            }
+            break;
+        case HM_LFT:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_LEFT); // Send KC_LEFT on tap
+                return false;
+            }
+            break;
+        case HM_DWN:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_DOWN); // Send KC_DOWN on tap
+                return false;
+            }
+            break;
+        case HM_RGT:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RIGHT); // Send KC_RIGHT on tap
+                return false;
+            }
+            break;
+        case HM_8:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_8); // Send KC_8 on tap
+                return false;
+            }
+            break;
+        case HM_7:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_7); // Send KC_7 on tap
+                return false;
+            }
+            break;
+        case HM_6:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_6); // Send KC_6 on tap
+                return false;
+            }
+            break;
+        case HM_5:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_5); // Send KC_5 on tap
+                return false;
+            }
+            break;
+        case HM_BSLS:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_BSLS); // Send KC_BSLS on tap
+                return false;
+            }
+            break;
+        case HM_SLSH:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_SLSH); // Send KC_SLSH on tap
+                return false;
+            }
+            break;
+        case HM_LCBR:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_LCBR); // Send KC_LCBR on tap
+                return false;
+            }
+            break;
+        case HM_RCBR:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RCBR); // Send KC_RCBR on tap
+                return false;
+            }
+            break;
+        case HM_LPRN:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_LPRN); // Send KC_LPRN on tap
+                return false;
+            }
+            break;
+        case HM_RPRN:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_RPRN); // Send KC_RPRN on tap
+                return false;
+            }
+            break;
+        case HM_MINS:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_MINS); // Send KC_MINS on tap
+                return false;
+            }
+            break;
+        case HM_COLN:
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(KC_COLN); // Send KC_COLN on tap
+                return false;
+            }
+            break;
+    }
+    return true;
+}
+
