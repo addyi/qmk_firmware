@@ -47,34 +47,6 @@ see https://docs.qmk.fm/#/reference_keymap_extras
 #define HM_6 SFT_T(DE_6)
 #define HM_5 CMD_T(DE_5)
 
-// Define home row mods for symbols layer
-/*
-Some keycodes conflict in the case statement of process_record_user below.
-Therefor the custom_keycodes get defined to resolve this conflict.
-An example would be DE_7 and DE_SLSH. They are the same except one is shifted.
-*/
-enum custom_keycodes {
-    CUSTOM_BSLS = SAFE_RANGE,
-    CUSTOM_SLSH,
-    CUSTOM_LCBR,
-    CUSTOM_RCBR,
-
-    CUSTOM_COLN,
-    CUSTOM_MINS,
-    CUSTOM_RPRN,
-    CUSTOM_LPRN
-};
-
-#define HM_BSLS CTL_T(CUSTOM_BSLS)
-#define HM_SLSH OPT_T(CUSTOM_SLSH)
-#define HM_LCBR SFT_T(CUSTOM_LCBR)
-#define HM_RCBR CMD_T(CUSTOM_RCBR)
-
-#define HM_COLN CTL_T(CUSTOM_COLN)
-#define HM_MINS OPT_T(CUSTOM_MINS)
-#define HM_RPRN SFT_T(CUSTOM_RPRN)
-#define HM_LPRN CMD_T(CUSTOM_LPRN)
-
 // Define keyboard layer
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // BASE LAYER
@@ -108,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX, DE_EURO, DE_UNDS, DE_LBRC, DE_RBRC, DE_CIRC,                      DE_EXLM, DE_LABK, DE_RABK,  DE_EQL, DE_AMPR, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, HM_BSLS, HM_SLSH, HM_LCBR, HM_RCBR, DE_ASTR,                      DE_QUES, HM_LPRN, HM_RPRN, HM_MINS, HM_COLN, XXXXXXX,
+      XXXXXXX, DE_BSLS, DE_SLSH, DE_LCBR, DE_RCBR, DE_ASTR,                      DE_QUES, DE_LPRN, DE_RPRN, DE_MINS, DE_COLN, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, DE_HASH,  DE_DLR, DE_PIPE, DE_TILD,  DE_GRV,                      DE_PLUS, DE_PERC, DE_DQUO, DE_QUOT, DE_SCLN, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -184,54 +156,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case HM_5:
             if (record->tap.count && record->event.pressed) {
                 tap_code16(DE_5); // Send DE_5 on tap
-                return false;
-            }
-            break;
-        case HM_BSLS:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_BSLS); // Send DE_BSLS on tap
-                return false;
-            }
-            break;
-        case HM_SLSH:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_SLSH); // Send DE_SLSH on tap
-                return false;
-            }
-            break;
-        case HM_LCBR:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_LCBR); // Send DE_LCBR on tap
-                return false;
-            }
-            break;
-        case HM_RCBR:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_RCBR); // Send DE_RCBR on tap
-                return false;
-            }
-            break;
-        case HM_LPRN:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_LPRN); // Send DE_LPRN on tap
-                return false;
-            }
-            break;
-        case HM_RPRN:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_RPRN); // Send DE_RPRN on tap
-                return false;
-            }
-            break;
-        case HM_MINS:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_MINS); // Send DE_MINS on tap
-                return false;
-            }
-            break;
-        case HM_COLN:
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(DE_COLN); // Send DE_COLN on tap
                 return false;
             }
             break;
