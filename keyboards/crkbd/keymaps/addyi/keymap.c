@@ -18,16 +18,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 
-// Define home row mods for base layer
-#define HM_U CTL_T(KC_U)
-#define HM_I OPT_T(KC_I)
-#define HM_A SFT_T(KC_A)
-#define HM_E CMD_T(KC_E)
+/*
+Import german macos keymap aliases.
+see https://docs.qmk.fm/#/reference_keymap_extras
+*/
+#include "keymap_german_mac_iso.h"
+#include "sendstring_german_mac_iso.h"
 
-#define HM_D CTL_T(KC_D)
-#define HM_T OPT_T(KC_T)
-#define HM_R SFT_T(KC_R)
-#define HM_N CMD_T(KC_N)
+// Define home row mods for base layer
+#define HM_U CTL_T(DE_U)
+#define HM_I OPT_T(DE_I)
+#define HM_A SFT_T(DE_A)
+#define HM_E CMD_T(DE_E)
+
+#define HM_D CTL_T(DE_D)
+#define HM_T OPT_T(DE_T)
+#define HM_R SFT_T(DE_R)
+#define HM_N CMD_T(DE_N)
 
 // Define home row mods for navigation/number layer
 #define HM_STA CTL_T(KC_HOME)
@@ -35,34 +42,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define HM_DWN SFT_T(KC_DOWN)
 #define HM_RGT CMD_T(KC_RIGHT)
 
-#define HM_8 CTL_T(KC_8)
-#define HM_7 OPT_T(KC_7)
-#define HM_6 SFT_T(KC_6)
-#define HM_5 CMD_T(KC_5)
+#define HM_8 CTL_T(DE_8)
+#define HM_7 OPT_T(DE_7)
+#define HM_6 SFT_T(DE_6)
+#define HM_5 CMD_T(DE_5)
 
 // Define home row mods for symbols layer
-#define HM_BSLS CTL_T(KC_BSLS)
-#define HM_SLSH OPT_T(KC_SLSH)
-#define HM_LCBR SFT_T(KC_LCBR)
-#define HM_RCBR CMD_T(KC_RCBR)
+/*
+Some keycodes conflict in the case statement of process_record_user below.
+Therefor the custom_keycodes get defined to resolve this conflict.
+An example would be DE_7 and DE_SLSH. They are the same except one is shifted.
+*/
+enum custom_keycodes {
+    CUSTOM_BSLS = SAFE_RANGE,
+    CUSTOM_SLSH,
+    CUSTOM_LCBR,
+    CUSTOM_RCBR,
 
-#define HM_COLN CTL_T(KC_COLN)
-#define HM_MINS OPT_T(KC_MINS)
-#define HM_RPRN SFT_T(KC_RPRN)
-#define HM_LPRN CMD_T(KC_LPRN)
+    CUSTOM_COLN,
+    CUSTOM_MINS,
+    CUSTOM_RPRN,
+    CUSTOM_LPRN
+};
 
-// Define symbols
-#define KC_EUR LSA(KC_2)
+#define HM_BSLS CTL_T(CUSTOM_BSLS)
+#define HM_SLSH OPT_T(CUSTOM_SLSH)
+#define HM_LCBR SFT_T(CUSTOM_LCBR)
+#define HM_RCBR CMD_T(CUSTOM_RCBR)
 
+#define HM_COLN CTL_T(CUSTOM_COLN)
+#define HM_MINS OPT_T(CUSTOM_MINS)
+#define HM_RPRN SFT_T(CUSTOM_RPRN)
+#define HM_LPRN CMD_T(CUSTOM_LPRN)
+
+// Define keyboard layer
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // BASE LAYER
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,    KC_X,    KC_V,    KC_L,    KC_C,    KC_W,                         KC_K,    KC_H,    KC_G,    KC_F,    KC_Q, XXXXXXX,
+      XXXXXXX,    DE_X,    DE_V,    DE_L,    DE_C,    DE_W,                         DE_K,    DE_H,    DE_G,    DE_F,    DE_Q, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,    HM_U,    HM_I,    HM_A,    HM_E,    KC_O,                         KC_S,    HM_N,    HM_R,    HM_T,    HM_D, XXXXXXX,
+      XXXXXXX,    HM_U,    HM_I,    HM_A,    HM_E,    DE_O,                         DE_S,    HM_N,    HM_R,    HM_T,    HM_D, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX,    KC_Y,    KC_P,    KC_Z,                         KC_B,    KC_M, KC_COMM,  KC_DOT,    KC_J, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX,    DE_Y,    DE_P,    DE_Z,                         DE_B,    DE_M, DE_COMM,  DE_DOT,    DE_J, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX,   MO(1),  KC_SPC,    KC_LSFT,   MO(2),   MO(3)
                                       //`--------------------------'  `--------------------------'
@@ -71,11 +93,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // NAVIGATION/NUMBER LAYER
     [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN,                      KC_COLN,    KC_9,    KC_0, KC_COMM,  KC_DOT, XXXXXXX,
+      XXXXXXX, KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN,                      DE_COLN,    DE_9,    DE_0, DE_COMM,  DE_DOT, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,  HM_STA,  HM_LFT,  HM_DWN,  HM_RGT,  KC_END,                     KC_MINUS,    HM_5,    HM_6,    HM_7,    HM_8, XXXXXXX,
+      XXXXXXX,  HM_STA,  HM_LFT,  HM_DWN,  HM_RGT,  KC_END,                      DE_MINS,    HM_5,    HM_6,    HM_7,    HM_8, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,  KC_ESC,  KC_TAB, XXXXXXX,  KC_ENT, KC_CAPS,                      KC_PLUS,    KC_1,    KC_2,    KC_3,    KC_4, XXXXXXX,
+      XXXXXXX,  KC_ESC,  KC_TAB, XXXXXXX,  KC_ENT, KC_CAPS,                      DE_PLUS,    DE_1,    DE_2,    DE_3,    DE_4, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
@@ -84,13 +106,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // SYMBOLS LAYER
     [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX,  KC_EUR, KC_UNDS, KC_LBRC, KC_RBRC, KC_CIRC,                      KC_EXLM,   KC_LT,   KC_GT,  KC_EQL, KC_AMPR, XXXXXXX,
+      XXXXXXX, DE_EURO, DE_UNDS, DE_LBRC, DE_RBRC, DE_CIRC,                      DE_EXLM, DE_LABK, DE_RABK,  DE_EQL, DE_AMPR, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, HM_BSLS, HM_SLSH, HM_LCBR, HM_RCBR, KC_ASTR,                      KC_QUES, HM_LPRN, HM_RPRN, HM_MINS, HM_COLN, XXXXXXX,
+      XXXXXXX, HM_BSLS, HM_SLSH, HM_LCBR, HM_RCBR, DE_ASTR,                      DE_QUES, HM_LPRN, HM_RPRN, HM_MINS, HM_COLN, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_HASH,  KC_DLR, KC_PIPE, KC_TILD,  KC_GRV,                      KC_PLUS, KC_PERC, KC_DQUO, KC_QUOT, KC_SCLN, XXXXXXX,
+      XXXXXXX, DE_HASH,  DE_DLR, DE_PIPE, DE_TILD,  DE_GRV,                      DE_PLUS, DE_PERC, DE_DQUO, DE_QUOT, DE_SCLN, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX,   KC_AT,    XXXXXXX, _______, XXXXXXX
+                                          XXXXXXX, XXXXXXX,   DE_AT,    XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -143,73 +165,73 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case HM_8:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_8); // Send KC_8 on tap
+                tap_code16(DE_8); // Send DE_8 on tap
                 return false;
             }
             break;
         case HM_7:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_7); // Send KC_7 on tap
+                tap_code16(DE_7); // Send DE_7 on tap
                 return false;
             }
             break;
         case HM_6:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_6); // Send KC_6 on tap
+                tap_code16(DE_6); // Send DE_6 on tap
                 return false;
             }
             break;
         case HM_5:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_5); // Send KC_5 on tap
+                tap_code16(DE_5); // Send DE_5 on tap
                 return false;
             }
             break;
         case HM_BSLS:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_BSLS); // Send KC_BSLS on tap
+                tap_code16(DE_BSLS); // Send DE_BSLS on tap
                 return false;
             }
             break;
         case HM_SLSH:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_SLSH); // Send KC_SLSH on tap
+                tap_code16(DE_SLSH); // Send DE_SLSH on tap
                 return false;
             }
             break;
         case HM_LCBR:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_LCBR); // Send KC_LCBR on tap
+                tap_code16(DE_LCBR); // Send DE_LCBR on tap
                 return false;
             }
             break;
         case HM_RCBR:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_RCBR); // Send KC_RCBR on tap
+                tap_code16(DE_RCBR); // Send DE_RCBR on tap
                 return false;
             }
             break;
         case HM_LPRN:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_LPRN); // Send KC_LPRN on tap
+                tap_code16(DE_LPRN); // Send DE_LPRN on tap
                 return false;
             }
             break;
         case HM_RPRN:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_RPRN); // Send KC_RPRN on tap
+                tap_code16(DE_RPRN); // Send DE_RPRN on tap
                 return false;
             }
             break;
         case HM_MINS:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_MINS); // Send KC_MINS on tap
+                tap_code16(DE_MINS); // Send DE_MINS on tap
                 return false;
             }
             break;
         case HM_COLN:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_COLN); // Send KC_COLN on tap
+                tap_code16(DE_COLN); // Send DE_COLN on tap
                 return false;
             }
             break;
