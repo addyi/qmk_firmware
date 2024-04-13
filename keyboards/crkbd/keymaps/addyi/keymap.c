@@ -65,13 +65,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // NAVIGATION/NUMBER LAYER
     [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN,                      DE_COLN,    DE_9,    DE_0, DE_COMM,  DE_DOT, XXXXXXX,
+      XXXXXXX, KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN,                      XXXXXXX,    DE_9,    DE_0, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX,  HM_STA,  HM_LFT,  HM_DWN,  HM_RGT,  KC_END,                      DE_MINS,    HM_5,    HM_6,    HM_7,    HM_8, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX,  KC_ESC,  KC_TAB, XXXXXXX,  KC_ENT, KC_CAPS,                      DE_PLUS,    DE_1,    DE_2,    DE_3,    DE_4, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                          XXXXXXX, _______, XXXXXXX,     DE_DOT, DE_COMM, DE_COLN
                                       //`--------------------------'  `--------------------------'
   ),
 
