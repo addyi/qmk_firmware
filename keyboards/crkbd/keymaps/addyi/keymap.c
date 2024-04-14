@@ -37,7 +37,9 @@ see https://docs.qmk.fm/#/reference_keymap_extras
 #define HM_N CMD_T(DE_N)
 
 // Define home row mods for navigation/number layer
-#define HM_STA CTL_T(KC_HOME)
+#define L_HOME LCMD(KC_LEFT)
+#define L_END LCMD(KC_RIGHT)
+#define HM_STA CTL_T(L_HOME)
 #define HM_LFT OPT_T(KC_LEFT)
 #define HM_DWN SFT_T(KC_DOWN)
 #define HM_RGT CMD_T(KC_RIGHT)
@@ -67,7 +69,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       XXXXXXX, KC_PGUP, KC_BSPC,   KC_UP,  KC_DEL, KC_PGDN,                      XXXXXXX,    DE_9,    DE_0, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX,  HM_STA,  HM_LFT,  HM_DWN,  HM_RGT,  KC_END,                      DE_MINS,    HM_5,    HM_6,    HM_7,    HM_8, XXXXXXX,
+      XXXXXXX,  HM_STA,  HM_LFT,  HM_DWN,  HM_RGT,   L_END,                      DE_MINS,    HM_5,    HM_6,    HM_7,    HM_8, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX,  KC_ESC,  KC_TAB, XXXXXXX,  KC_ENT, KC_CAPS,                      DE_PLUS,    DE_1,    DE_2,    DE_3,    DE_4, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -113,7 +115,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case HM_STA:
             if (record->tap.count && record->event.pressed) {
-                tap_code16(KC_HOME); // Send KC_HOME on tap
+                tap_code16(LCMD(KC_LEFT)); // Send LCMD(KC_LEFT) on tap
                 return false;        // Ignore further processing of key.
             }
             break;
